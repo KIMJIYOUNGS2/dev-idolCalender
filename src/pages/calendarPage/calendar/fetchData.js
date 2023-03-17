@@ -1,4 +1,4 @@
-const fetchData = () =>
+export const fetchData = () =>
   fetch("http://127.0.0.1:8000/api/v1/idols/4/schedules")
     .then((res) => res.json())
     .then((data) => {
@@ -23,3 +23,11 @@ const fetchData = () =>
       console.log("fetch1", setIdolSchedule);
       return setIdolSchedule;
     });
+
+// export const userSchedule = () => {
+//   fetch("http://127.0.0.1:8000/api/v1/users_calendar/@jiyoung")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log("user");
+//     });
+// };

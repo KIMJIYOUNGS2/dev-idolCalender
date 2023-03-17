@@ -16,6 +16,8 @@ import Layout from "./UI/Layout";
 import axios from "axios";
 import CalendarPage from "./pages/calendarPage/hj_calendarPage/CalendarPage";
 import Calendar from "./pages/calendarPage/calendar/Calendar";
+import TodoList from "./pages/calendarPage/myschedule/TodoList";
+import MyTodo from "./pages/calendarPage/myschedule/MyTodo";
 
 function App() {
   /**전역에 토큰 허용 */
@@ -64,6 +66,16 @@ function App() {
               <Layout>
                 <Calendar />
               </Layout>
+            }
+          />
+          <Route path="/mytodo" element={<MyTodo />} />
+          <Route
+            path="/todolist"
+            element={
+              <div>
+                {/* <MyTodo /> */}
+                <TodoList />
+              </div>
             }
           />
 

@@ -1,5 +1,5 @@
 import "./Calendar.css";
-import "./fetchData";
+import { fetchData } from "./fetchData";
 
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -19,6 +19,23 @@ import {
 import { useQuery } from "react-query";
 
 const Calendar = () => {
+  // user 스케줄
+  const [userSchedule, setUserSchedule] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/v1/users_calendar/@jiyoung", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const setUserSchedule = [];
+        console.log("get userschedule", res[1]);
+      });
+    return;
+  });
+
+  // console.log(userSchedule);
+
   const [idolSchedule, setIdolSchedule] = useState([]);
 
   useEffect(() => {
@@ -46,7 +63,7 @@ const Calendar = () => {
         return;
       });
     setIdolSchedule(idolSchedule);
-  }, [idolSchedule]);
+  }, []);
 
   // useState를 사용하여 달 단위로 변경
   const [getMoment, setMoment] = useState(moment());
@@ -191,52 +208,13 @@ const Calendar = () => {
 };
 export default Calendar;
 
-const fetchData = () =>
-  fetch("http://127.0.0.1:8000/api/v1/idols/4/schedules")
-    .then((res) => res.json())
-    .then((data) => {
-      const setIdolSchedule = [];
-      for (let i = 0; i < data.length; i++) {
-        // YYYYMMDD 형태로 변환하는 작업
-        let dateList = data[i].when.split("-");
-        dateList[2] = dateList[2].substr(0, 2);
-        let dateValue = dateList.join("");
-
-        // ScheduleType안에 있는 type을 가져오는 작업
-        let typeObj = data[i].ScheduleType;
-        let typeValue = typeObj[Object.keys(typeObj)[0]];
-
-        setIdolSchedule.push({
-          date: dateValue,
-          title: data[i].ScheduleTitle,
-          content: data[i].ScheduleContent,
-          category: typeValue,
-        });
-      }
-      console.log("fetch1", setIdolSchedule);
-      return setIdolSchedule;
-    });
-
 // Show_event(): 달력에 데이터를 보여주는 기능
 function Show_event({ days }) {
   const schedule = useQuery(["schedule"], fetchData);
 
   useEffect(() => {
-    console.log("checking", schedule.data);
-  }, [schedule]);
-
-  // console.log(idolSchedule);
-  // useEffect(() => {
-  //   console.log(
-  //     "fetch2",
-  //     data.then((res) => res)
-  //   );
-  //   setIdolSchedule(data);
-  // }, []);
-
-  // useEffect(() => {
-  //   // console.log("cccc", idolSchedule);
-  // }, [idolSchedule]);
+    // console.log("checking", schedule.data);
+  }, []);
 
   return (
     <>
