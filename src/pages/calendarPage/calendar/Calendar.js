@@ -1,4 +1,5 @@
-import "./Calendar.css";
+// import "./Calendar.css";
+import styles from "./Calendar.module.scss";
 import { fetchData } from "./fetchData";
 
 import { useEffect, useState } from "react";
@@ -19,23 +20,6 @@ import {
 import { useQuery } from "react-query";
 
 const Calendar = () => {
-  // user 스케줄
-  const [userSchedule, setUserSchedule] = useState([]);
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/v1/users_calendar/@jiyoung", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const setUserSchedule = [];
-        console.log("get userschedule", res[1]);
-      });
-    return;
-  });
-
-  // console.log(userSchedule);
-
   const [idolSchedule, setIdolSchedule] = useState([]);
 
   useEffect(() => {
@@ -102,9 +86,9 @@ const Calendar = () => {
               // 오늘 날짜에 today style 적용
               if (moment().format("YYYYMMDD") === days.format("YYYYMMDD")) {
                 return (
-                  <td key={index} className="today">
+                  <td key={index} className={styles.today}>
                     <span>{days.format("D")}</span>
-                    <div className="event-content">
+                    <div className={styles.eventContent}>
                       <Show_event days={days} />
                     </div>
                   </td>
@@ -125,7 +109,7 @@ const Calendar = () => {
                     }
                   >
                     <span value={index}>{days.format("D")}</span>
-                    <div className="event-content">
+                    <div className={styles.eventContent}>
                       <Show_event days={days} />
                     </div>
                   </td>
@@ -139,10 +123,10 @@ const Calendar = () => {
   };
 
   return (
-    <div className="calendar-container">
-      <div className="control-container">
+    <div className={styles.calendarContainer}>
+      <div className={styles.controlContainer}>
         <button
-          className="prev-btn"
+          className={styles.prevBtn}
           onClick={() => {
             // clone() 은 기존의 moment가 아닌 새로운 객체를 반환했다는 의미
             setMoment(getMoment.clone().subtract(1, "month"));
@@ -150,9 +134,9 @@ const Calendar = () => {
         >
           <FontAwesomeIcon icon={faChevronLeft} size="lg" />
         </button>
-        <span className="title">{today.format("YYYY.MM")}</span>
+        <span className={styles.title}>{today.format("YYYY.MM")}</span>
         <button
-          className="next-btn"
+          className={styles.nextBtn}
           onClick={() => {
             setMoment(getMoment.clone().add(1, "month"));
           }}
@@ -160,7 +144,7 @@ const Calendar = () => {
           <FontAwesomeIcon icon={faChevronRight} size="lg" />
         </button>
         <button
-          className="today-btn"
+          className={styles.todayBtn}
           onClick={() => {
             setMoment(moment());
           }}
@@ -169,23 +153,23 @@ const Calendar = () => {
         </button>
       </div>
 
-      <div className="category-container">
-        <button className="category-btn">
+      <div className={styles.categoryContainer}>
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faBroadcastTower} size="sm" /> 방송
         </button>
-        <button className="category-btn">
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faCompactDisc} size="sm" /> 발매
         </button>
-        <button className="category-btn">
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faStore} size="sm" /> 구매
         </button>
-        <button className="category-btn">
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faGift} size="sm" /> 축하
         </button>
-        <button className="category-btn">
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faCalendarCheck} size="sm" /> 행사
         </button>
-        <button className="category-btn">
+        <button className={styles.categoryBtn}>
           <FontAwesomeIcon icon={faUser} size="sm" /> my
         </button>
       </div>
@@ -224,31 +208,31 @@ function Show_event({ days }) {
           // console.log(data.type);
           if (data.category === "broadcast") {
             return (
-              <div key={i} className="broadcast">
+              <div key={i} className={styles.broadcast}>
                 {data.data}
               </div>
             );
           } else if (data.category === "release") {
             return (
-              <div key={i} className="release">
+              <div key={i} className={styles.release}>
                 {data.data}
               </div>
             );
           } else if (data.category === "buy") {
             return (
-              <div key={i} className="buy">
+              <div key={i} className={styles.buy}>
                 {data.data}
               </div>
             );
           } else if (data.category === "congrats") {
             return (
-              <div key={i} className="congratulations">
+              <div key={i} className={styles.congrats}>
                 {data.data}
               </div>
             );
           } else if (data.category === "event") {
             return (
-              <div key={i} className="event">
+              <div key={i} className={styles.event}>
                 {data.data}
               </div>
             );
