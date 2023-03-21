@@ -18,6 +18,7 @@ import CalendarPage from "./pages/calendarPage/hj_calendarPage/CalendarPage";
 import Calendar from "./pages/calendarPage/calendar/Calendar";
 // import Todo from "./pages/calendarPage/myschedule/Todo";
 import MyTodo from "./pages/calendarPage/myschedule/MyTodo";
+import UserSchedule from "./pages/calendarPage/myschedule/UserSchedule";
 
 function App() {
   /**전역에 토큰 허용 */
@@ -68,7 +69,7 @@ function App() {
               </Layout>
             }
           />
-          <Route path="/mytodo" element={<MyTodo />} />
+          <Route path="/userschedule" element={<UserSchedule />} />
           <Route
             path="/todo"
             element={

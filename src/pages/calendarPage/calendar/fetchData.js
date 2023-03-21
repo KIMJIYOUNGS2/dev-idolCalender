@@ -1,5 +1,5 @@
 export const fetchData = () =>
-  fetch("http://127.0.0.1:8000/api/v1/idols/4/schedules")
+  fetch("http://127.0.0.1:8000/api/v1/idols/1/schedules")
     .then((res) => res.json())
     .then((data) => {
       const setIdolSchedule = [];
@@ -21,6 +21,7 @@ export const fetchData = () =>
         });
       }
       console.log("fetch1", setIdolSchedule);
+
       return setIdolSchedule;
     });
 

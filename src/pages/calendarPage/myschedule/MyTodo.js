@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 
 import DeleteBtn from "./DeleteTodo";
 import AddTodo from "./AddTodo";
+import styles from "./MyTodo.module.scss";
 
 function MyTodo() {
   const [todoList, setTodoList] = useState([]);
 
   const fetchData = () => {
-    fetch("http://127.0.0.1:8000/api/v1/users_calendar/@jiyoung")
+    fetch("http://127.0.0.1:8000/api/v1/users_calendar/")
       .then((res) => res.json())
       .then((data) => setTodoList(data))
       .catch((data) => console.log(data));
@@ -20,10 +21,10 @@ function MyTodo() {
   }, []);
 
   return (
-    <div className="mySchedule">
+    <div className={styles.mySchedule}>
       <h1>TODO LIST</h1>
       <form onSubmit={AddTodo}>
-        <input name="contents" type="text" />
+        <input name="contents" type="text" placeholder="할 일을 입력하세요" />
         <input name="when" type="date" />
         <input value="추가" type="submit" />
       </form>

@@ -1,6 +1,7 @@
 // import "./Calendar.css";
 import styles from "./Calendar.module.scss";
 import { fetchData } from "./fetchData";
+import { axiosSchedule } from "../../../api";
 
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -18,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 
 const Calendar = () => {
   const [idolSchedule, setIdolSchedule] = useState([]);
@@ -26,7 +28,7 @@ const Calendar = () => {
     const fetchIdolSchedule = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/api/v1/idols/4/schedules"
+          "http://127.0.0.1:8000/api/v1/idols/1/schedules"
         );
         const data = await response.json();
         const idolSchedule = data.map((schedule) => {
