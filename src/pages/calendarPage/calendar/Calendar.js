@@ -1,8 +1,8 @@
 // import "./Calendar.css";
 import styles from "./Calendar.module.scss";
 import { fetchData } from "./fetchData";
-import { axiosSchedule } from "../../../api";
 
+import axios from "axios";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,27 +17,23 @@ import {
   faGift,
   faCalendarCheck,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
 
 const Calendar = () => {
   const [idolSchedule, setIdolSchedule] = useState([]);
 
   useEffect(() => {
-    const fetchIdolSchedule = async () => {
+    const fetchIdolSchedule = async (pk) => {
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/v1/idols/1/schedules"
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/v1/idols/${pk}/schedules`
         );
-        const data = await response.json();
+        const data = response.data;
         const idolSchedule = data.map((schedule) => {
-          // YYYYMMDD 형태로 변환하는 작업
           const dateList = schedule.when.split("-");
           dateList[2] = dateList[2].substr(0, 2);
           const dateValue = dateList.join("");
 
-          // ScheduleType안에 있는 type을 가져오는 작업
           const typeObj = schedule.ScheduleType;
           const typeValue = typeObj[Object.keys(typeObj)[0]];
 
@@ -55,6 +51,8 @@ const Calendar = () => {
     };
     fetchIdolSchedule();
   }, []);
+
+  const [selectedDay, setSelectedDay] = useState(null);
 
   // useState를 사용하여 달 단위로 변경
   const [getMoment, setMoment] = useState(moment());
@@ -93,8 +91,22 @@ const Calendar = () => {
               // 오늘 날짜에 today style 적용
               if (moment().format("YYYYMMDD") === days.format("YYYYMMDD")) {
                 return (
-                  <td key={index} className={styles.today}>
-                    <span>{days.format("D")}</span>
+                  <td
+                    key={index}
+                    onClick={() => setSelectedDay(days)}
+                    className={styles.today}
+                  >
+                    <span
+                      className={
+                        selectedDay &&
+                        selectedDay.format("YYYYMMDD") ===
+                          days.format("YYYYMMDD")
+                          ? styles.selected
+                          : null
+                      }
+                    >
+                      {days.format("D")}
+                    </span>
                     <div className={styles.eventContent}>
                       <ShowEvent days={days} />
                     </div>
@@ -109,13 +121,19 @@ const Calendar = () => {
                 );
               } else {
                 return (
-                  <td
-                    key={index}
-                    onClick={() =>
-                      console.log("clickedDay: " + days.format("D"))
-                    }
-                  >
-                    <span value={index}>{days.format("D")}</span>
+                  <td key={index} onClick={() => setSelectedDay(days)}>
+                    <span
+                      value={index}
+                      className={
+                        selectedDay &&
+                        selectedDay.format("YYYYMMDD") ===
+                          days.format("YYYYMMDD")
+                          ? styles.selected
+                          : null
+                      }
+                    >
+                      {days.format("D")}
+                    </span>
                     <div className={styles.eventContent}>
                       <ShowEvent days={days} />
                     </div>

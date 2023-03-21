@@ -16,8 +16,6 @@ import Layout from "./UI/Layout";
 import axios from "axios";
 import CalendarPage from "./pages/calendarPage/hj_calendarPage/CalendarPage";
 import Calendar from "./pages/calendarPage/calendar/Calendar";
-// import Todo from "./pages/calendarPage/myschedule/Todo";
-import MyTodo from "./pages/calendarPage/myschedule/MyTodo";
 import UserSchedule from "./pages/calendarPage/myschedule/UserSchedule";
 
 function App() {
@@ -69,15 +67,8 @@ function App() {
               </Layout>
             }
           />
+          {/* 유저스케줄 */}
           <Route path="/userschedule" element={<UserSchedule />} />
-          <Route
-            path="/todo"
-            element={
-              <div>
-                <MyTodo />
-              </div>
-            }
-          />
 
           {/* 회원가입페이지 */}
           <Route path="/signup" element={<SignUp />} />

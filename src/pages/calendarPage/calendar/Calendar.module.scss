@@ -110,15 +110,7 @@
         text-align: center;
         vertical-align: top;
 
-        span{
-            cursor: pointer;
-            &:hover {
-                    color:white;
-                    background-color: black;
-                    border-radius: 50%;
-                    padding: 8px;  
-            }  
-        }
+       
     }
 }
 
@@ -198,6 +190,24 @@
     align-items: center;
     display: flex;
 }
+
+.selected {
+    position: relative;
+  }
+  .selected::before {
+    content: "";
+    display: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: rgb(222, 41, 228);
+    z-index: -1;
+    position: absolute;
+    left: 1px;
+  }
+  
+  
+  
 
 /* 미디어 쿼리 */
 /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
